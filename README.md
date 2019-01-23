@@ -1,7 +1,7 @@
 ## Setup
 1. Run `yarn` in the repo root.
 1. `cd` into `summing-grid` and run `yarn` to install dependencies.
-1. `yarn start` to serve application (also hosted on (github.io)[http://github.io/])
+1. `yarn start` to serve application.
 
 ## Submission
 
