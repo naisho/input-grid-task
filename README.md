@@ -1,57 +1,41 @@
 ## Setup
-
-**You may fork these repo or download a local copy.**
-
-### With React
-
-If you'd like to use React, this repo is set up with `create-react-app`.
-
-1. Fork or download a local copy of this repo.
-2. Run `yarn` in the repo root.
-3. `cd` into `summing-grid` and run `yarn` to install dependencies.
-4. Run scrips from `summing-grid/package.json` to test or run your application.
-
-### With your own framework
-
-You may use a framework of your choice to complete this task.
-The root `package.json` in this repo can be adjusted to install whatever dependencies you need.
+1. Run `yarn` in the repo root.
+1. `cd` into `summing-grid` and run `yarn` to install dependencies.
+1. `yarn start` to serve application (also hosted on (github.io)[http://github.io/])
 
 ## Submission
 
-### For github forks
-
-Commit and push your code to your forked repo. Open a pull request against this repo and let us know.
-
-### For downloads
-
-Send a zip file of your completed exercise to your contact at CB Insights.
-
-----
-
-## Your task
-
-Your task will be to create a 1x4 flexible grid. The first 3 spaces in the grid should contain input fields that accept numbers. The 4th space in the grid will display the sum of the numbers in the first 3 spaces.
-
-### The grid
-
-The grid should have 1 row and 4 columns. By default, the width of each column should be 25% of the window width. The border of the grid must be 1px black.
-
-Perform the following operations based on the value of window size:
-
-If the window size is less than 720px, then the 1x4 flexible grid becomes a 2x2 grid, that is, the 3rd and 4th columns slide down onto the 2nd row.
-If the window size is less than 360px, then the 1x4 flexible grid becomes 4x1 grid, that is, each column slides under the one before it. The 2nd column slides under the 1st, the 3rd slides under the 2nd, and the 4th slides under the 3rd.
-
-### The input fields
-
-The first 3 input fields should each accept a number. Then write code which sums the 3 numbers together and displays the sum in the 4th field. Then write code which formats the sum to the nearest 3 digit number (e.g. 1234567 as 1.23M or 123456 as 123K).
+### Requirements
+1. Implement responsive grid
+    1. 4 column default
+    1. 2 column < 720px window
+    1. 1 column < 360px
+1. First three fields should accept a number
+1. Last field should display the sum to the nearest 3 digit number
 
 ### Extra Credit
+1. Validation (handled by Input type="number")
+1. Unit tests
 
-Add validation to the input fields to ensure that the entered values are numbers. Also ensure that entering non-number values does not break the other functionality or cause any errors.
-Add some unit tests (you may want to install additional node modules).
-
-**As you build this app, consider...**
+### Design Choices
 - How data should flow between components
+Given the scope of the applicaction, it is not necessary to use Redux.  Only one component needs to maintain state (array of addends).
+
 - Which components could be built to be reusable
+FlexContainer was made to be reusable.  The underlying input box could have also been a unit, but I decided to differentiate between the sum and addends for aesthetic reasons.
+
 - How to style the grid so that it's easy to add or remove input cells
+Flexbox was used to achieve this easily.  With row-wrap, each addend will be added left-to-right, top-to-bottom, with the sum cell always last.  The width of each cell is increased to 100% on a smaller breakpoint per requirement.  Additional stylistic changes added operators to make the intention of the application obvious (adding numbers).
+
 - How number formatting should handle edge cases
+There are several edge cases that must be considered:
+1. Numbers that don't have a suffix because they are too large (display scientific notation)
+1. Numbers between 0 and 100 (display first three digits, i.e. 9.99)
+1. Numbers between 0 and 1 (display appropriate SI units, i.e. milli, micro, ...)
+1. Same cases but with negative numbers
+
+### Final Thoughts
+- There are places where function creation can be reduced (unnecessary lambdas)
+- Edge case logic for the sum should be more concise and readable.  Logic should have been broken down into smaller functions.
+- Nav is not really a proper dumb component, but adding examples was an afterthough and purely for convenience
+- Original repo should use a newer version of react
